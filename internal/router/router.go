@@ -19,7 +19,6 @@ func Init(
 
 	r.Route("/api/v1", func(r chi.Router) {
 		r.Post("/drugs", lib.WrapHandler(handler.GetDrugs, env))
-		r.Post("/drugswuri", lib.WrapHandler(handler.GetDrugsWURI, env))
 	})
 
 	return r
