@@ -5,6 +5,8 @@ import (
 	"io"
 	"net/http"
 	"strings"
+
+	env "github.com/VinukaThejana/getdrugs/internal/config"
 )
 
 var (
@@ -41,4 +43,14 @@ func ValidateFileType(file io.Reader) error {
 	}
 
 	return nil
+}
+
+// WrapHandler wraps the handler function with response, request and the env
+func WrapHandler(
+	h func(http.ResponseWriter, *http.Request, *env.Env),
+	e *env.Env,
+) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		h(w, r, e)
+	}
 }
