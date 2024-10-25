@@ -2,6 +2,8 @@ package router
 
 import (
 	env "github.com/VinukaThejana/getdrugs/internal/config"
+	"github.com/VinukaThejana/getdrugs/internal/handler"
+	"github.com/VinukaThejana/getdrugs/pkg/lib"
 	"github.com/go-chi/chi/v5"
 	middlewares "github.com/go-chi/chi/v5/middleware"
 )
@@ -16,7 +18,8 @@ func Init(
 	r.Use(middlewares.Recoverer)
 
 	r.Route("/api/v1", func(r chi.Router) {
-		r.Post("/drugs", nil)
+		r.Post("/drugs", lib.WrapHandler(handler.GetDrugs, env))
+		r.Post("/drugswuri", lib.WrapHandler(handler.GetDrugsWURI, env))
 	})
 
 	return r
